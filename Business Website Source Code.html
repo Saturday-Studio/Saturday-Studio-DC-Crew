@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Saturday Studio</title>
+<meta name="description" content="Handmade finds for you or your loved ones" />
+<meta property="og:title" content="Saturday Studio" />
+<meta property="og:url" content="https://saturday-studio-dc-crew.com" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- These lines now look for the files in YOUR folder instead of the broken Amazon links -->
+<script type="module" crossorigin="" src="index-C2dmPSXj.js"></script>
+<link rel="stylesheet" crossorigin="" href="index-CWcekbCZ.css" />
+
+<link rel="stylesheet" id="fonts-code" href="https://miaoda-font.cdn.bcebos.com" />
+</head>
+<body>
+<div id="root"></div>
+
+<script id="md-click">
+window.mdClick = (e) => {
+const target = e.target.closest('[data-href]');
+if (!target) return;
+
+const { href, target: linkTarget } = target.dataset;
+
+// GOOGLE FORM CHECKOUT LOGIC
+if (href && (href.toLowerCase().includes('checkout') || href.toLowerCase().includes('order'))) {
+e.preventDefault();
+
+const cartItems = localStorage.getItem('cart') || "DC Crew Items";
+const cartQty = localStorage.getItem('totalQty') || "1";
+const baseUrl = "https://docs.google.com";
+
+// Using your Entry IDs: 839337160 (Items) and 302078835 (Quantity)
+const finalFormUrl = `${baseUrl}&entry.839337160=${encodeURIComponent(cartItems)}&entry.302078835=${cartQty}`;
+
+window.open(finalFormUrl, '_self');
+return;
+}
+
+if (!href) return;
+e.stopPropagation();
+e.preventDefault();
+
+if (linkTarget === '_blank' || href.startsWith('http')) {
+window.open(href, linkTarget || '_self');
+} else {
+const finalHref = href.startsWith('/') ? href : '/' + href;
+window.history.pushState({}, '', finalHref);
+window.dispatchEvent(new Event('popstate'));
+}
+};
+document.addEventListener('click', window.mdClick, true);
+</script>
+</body>
+</html>
